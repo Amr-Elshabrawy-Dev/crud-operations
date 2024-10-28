@@ -5,12 +5,12 @@ import Error from "../pages/Error";
 import Team from "../pages/Team";
 import Invoices from "../pages/Invoices";
 import Contacts from "../pages/Contacts";
-import Bar from "../pages/Bar";
 import Form from "../pages/Form";
-import Line from "../pages/Line";
-import Pie from "../pages/Pie";
+import BarChart from "../pages/BarChart";
+import LineChart from "../pages/LineChart";
+import PieChart from "../pages/PieChart";
 import FAQ from "../pages/FAQ";
-import Geography from "../pages/Geography";
+import GeographyChart from "../pages/GeographyChart";
 import Calendar from "../pages/Calendar";
 // import Home from "../pages/Home";
 
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "bar",
-        element: <Bar />,
+        element: <BarChart />,
       },
       {
         path: "form",
@@ -46,11 +46,11 @@ const router = createBrowserRouter([
       },
       {
         path: "line",
-        element: <Line />,
+        element: <LineChart />,
       },
       {
         path: "pie",
-        element: <Pie />,
+        element: <PieChart />,
       },
       {
         path: "faq",
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "geography",
-        element: <Geography />,
+        element: <GeographyChart />,
       },
       {
         path: "calendar",
