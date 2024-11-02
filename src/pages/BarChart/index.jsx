@@ -6,10 +6,19 @@ const BarChart = () => {
   return (
     <Box m={2}>
       <Heading title="Bar Chart" subtitle="Simple Bar Chart" />
-      <Box height="75vh">
+      <Box
+        height="75vh"
+        sx={{
+            "& svg": {
+              width: "100% !important",
+              willChange: "width",
+              shapeRendering: "auto",
+            },
+        }}
+      >
         <ChartBarCompo />
       </Box>
     </Box>
-  )
+  );
 };
 export default BarChart;

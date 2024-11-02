@@ -10,7 +10,6 @@ const ChartBarCompo = ({isDashboard=false}) => {
     <ResponsiveBar
       data={data}
       theme={{
-        // added
         axis: {
           domain: {
             line: {
@@ -36,6 +35,18 @@ const ChartBarCompo = ({isDashboard=false}) => {
           text: {
             fill: colors.grey[100],
           },
+        },
+        tooltip: {
+          container: {
+            background: colors.primary[400],
+            color: colors.grey[100],
+            fontSize: 12,
+          },
+          basic: {},
+          chip: {},
+          table: {},
+          tableCell: {},
+          tableCellValue: {},
         },
       }}
       keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
