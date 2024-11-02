@@ -16,7 +16,7 @@ const LineChart = () => {
           },
         }}
       >
-        <ChartLineCompo isDashboard />
+        <ChartLineCompo isDashboard={false} />
       </Box>
     </Box>
   );
