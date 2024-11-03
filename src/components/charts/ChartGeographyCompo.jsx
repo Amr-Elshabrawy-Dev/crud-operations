@@ -57,7 +57,7 @@ const ChartGeographyCompo = ({ isDashboard = false }) => {
       label="properties.name"
       valueFormat=".2s"
       projectionScale={isDashboard ? 40 : 150}
-      projectionTranslation={!isDashboard ? [0.49, 0.6] : [0.5, 0.5]}
+      projectionTranslation={!isDashboard ? [0.5, 0.5] : [0.49, 0.6]}
       projectionRotation={[0, 0, 0]}
       borderWidth={1.5}
       borderColor="#ffffff"
@@ -88,31 +88,7 @@ const ChartGeographyCompo = ({ isDashboard = false }) => {
                 ],
               },
             ]
-          : [
-              {
-                anchor: "left",
-                direction: "column",
-                justify: true,
-                translateX: -8,
-                translateY: 20,
-                itemsSpacing: 0,
-                itemWidth: 72,
-                itemHeight: 18,
-                itemDirection: "left-to-right",
-                itemTextColor: colors.grey[100],
-                itemOpacity: 0.5,
-                symbolSize: 18,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemTextColor: "#ffffff",
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
-              },
-            ]
+          : undefined
       }
     />
   );

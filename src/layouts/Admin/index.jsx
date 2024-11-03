@@ -3,24 +3,22 @@ import { ColorModeContext, useMode } from "../../theme";
 import Sidebar from "../../components/common/Sidebar";
 import Navbar from "../../components/common/Navbar";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
 
 const Admin = () => {
   const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
+          <Sidebar />
           <main className="content">
-            <Navbar setIsSidebar={setIsSidebar} />
+            <Navbar />
             <Outlet />
           </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
-}
-export default Admin
+};
+export default Admin;
