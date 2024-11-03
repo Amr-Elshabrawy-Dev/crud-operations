@@ -4,7 +4,7 @@ import { geoFeatures } from "../../data/mockGeoFeatures";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
-const ChartGeographyCompo = ({ isDashboard }) => {
+const ChartGeographyCompo = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -57,10 +57,8 @@ const ChartGeographyCompo = ({ isDashboard }) => {
       label="properties.name"
       valueFormat=".2s"
       projectionScale={isDashboard ? 40 : 150}
-      projectionTranslation={!isDashboard ? [0.49, 0.6] : [(0.5, 0.5)]}
+      projectionTranslation={!isDashboard ? [0.49, 0.6] : [0.5, 0.5]}
       projectionRotation={[0, 0, 0]}
-      // enableGraticule={true}
-      // graticuleLineColor="#dddddd"
       borderWidth={1.5}
       borderColor="#ffffff"
       legends={
@@ -90,7 +88,31 @@ const ChartGeographyCompo = ({ isDashboard }) => {
                 ],
               },
             ]
-          : undefined
+          : [
+              {
+                anchor: "left",
+                direction: "column",
+                justify: true,
+                translateX: -8,
+                translateY: 20,
+                itemsSpacing: 0,
+                itemWidth: 72,
+                itemHeight: 18,
+                itemDirection: "left-to-right",
+                itemTextColor: colors.grey[100],
+                itemOpacity: 0.5,
+                symbolSize: 18,
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemTextColor: "#ffffff",
+                      itemOpacity: 1,
+                    },
+                  },
+                ],
+              },
+            ]
       }
     />
   );
