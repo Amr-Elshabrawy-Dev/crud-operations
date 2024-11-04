@@ -88,7 +88,21 @@ const Calendar = () => {
           </List>
         </Box>
         {/* CALENDAR */}
-        <Box flex="1 1 100%" ml="15px">
+        <Box
+          flex="1 1 80%"
+          ml="15px"
+          sx={{
+            "& .fc-col-header": {
+              width: "100% !important",
+            },
+            "& .fc-daygrid-body,.fc-daygrid-body-balanced": {
+              width: "100% !important",
+              "& > table": {
+                width: "100% !important",
+              },
+            },
+          }}
+        >
           <FullCalendar
             height="75vh"
             plugins={[
@@ -107,12 +121,13 @@ const Calendar = () => {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
+            eventColor={colors.greenAccent[500]}
             select={handleDateClick}
             eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
             initialEvents={[
-              { id: "1234", title: "All-day event", date: "2024-10-14" },
-              { id: "4321", title: "Timed event", date: "2024-10-20" },
+              { id: "1234", title: "All-day event", date: "2024-11-14" },
+              { id: "4321", title: "Timed event", date: "2024-11-20" },
             ]}
           />
         </Box>

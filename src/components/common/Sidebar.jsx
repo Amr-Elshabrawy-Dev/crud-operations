@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Sidebar as ProSidebar } from "react-pro-sidebar";
 import { Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Collapse,
+  IconButton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 // import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -18,7 +25,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 
-const Item = ({ title, to, icon}) => {
+const Item = ({ title, to, icon }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -46,9 +53,6 @@ const Sidebar = () => {
           border: "none !important",
           height: "100%",
         },
-        "& .ps-sidebar-container": {
-          background: `${colors.primary[400]} !important`,
-        },
         "& .ps-menu-button": {
           backgroundColor: "transparent !important",
           transition: "all 0.2s ease-in-out",
@@ -62,76 +66,99 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar
+        collapsed={isCollapsed}
+        transitionDuration={500}
+        backgroundColor={colors.primary[400]}
+      >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed && <MenuOutlinedIcon />}
             title="Menu"
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
             }}
           >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINS
-                </Typography>
-                <IconButton
-                  onClick={() => setIsCollapsed(!isCollapsed)}
-                  sx={{
-                    "&.MuiIconButton-root:hover": {
-                      backgroundColor: "transparent !important",
-                      color: `${colors.blueAccent[500]} !important`,
-                      transition: "all 0.2s ease-in-out",
-                    },
-                  }}
+            <Box
+              display="inline-flex"
+              alignItems="center"
+              gap={isCollapsed ? 0 : 8}
+              ml={isCollapsed ? "0" : "15px"}
+              sx={{ transition: "all 0.5s ease-in-out" }}
+            >
+              <Box>
+                <Collapse
+                  in={!isCollapsed}
+                  orientation="horizontal"
+                  timeout={500}
                 >
-                  <MenuOutlinedIcon />
-                </IconButton>
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      color: colors.grey[100],
+                    }}
+                  >
+                    ADMINS
+                  </Typography>
+                </Collapse>
               </Box>
-            )}
+              <IconButton
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                my="10px"
+                width="50%"
+                sx={{
+                  "&.MuiIconButton-root:hover,&.MuiIconButton-root:active": {
+                    backgroundColor: "transparent !important",
+                    color: `${colors.blueAccent[500]} !important`,
+                    transition: "all 0.2s ease-in-out",
+                  },
+                }}
+              >
+                <MenuOutlinedIcon />
+              </IconButton>
+            </Box>
           </MenuItem>
 
-          {!isCollapsed && (
-            <Box mb={2}>
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="120px"
-                  src={`../../assets/user.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
+          <Box>
+            <Collapse
+              orientation="vertical"
+              in={!isCollapsed}
+              timeout={500}
+            >
+              <Box
+                mb={2}
+                sx={{
+                  color: colors.grey[100],
+                }}
+              >
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Avatar
+                    alt="profile-user"
+                    src={`../../assets/user.png`}
+                    sx={{ cursor: "pointer", height: "80px", width: "80px" }}
+                  />
+                </Box>
+                <Box textAlign="center">
+                  <Typography
+                    variant="h2"
+                    color={colors.grey[100]}
+                    fontWeight="bold"
+                    sx={{ m: "10px 0 0 0" }}
+                  >
+                    Amr
+                  </Typography>
+                  <Typography variant="h5" color={colors.greenAccent[500]}>
+                    VP Fancy Admin
+                  </Typography>
+                </Box>
               </Box>
-              <Box textAlign="center">
-                <Typography
-                  variant="h2"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
-                >
-                  Amr
-                </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
-                </Typography>
-              </Box>
-            </Box>
-          )}
+            </Collapse>
+          </Box>
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"} pb={2}>
-            <Item
-              title="Dashboard"
-              to="/"
-              icon={<HomeOutlinedIcon />}
-            />
+          <Box pl={isCollapsed ? undefined : "10%"}>
+            <Item title="Dashboard" to="/" icon={<HomeOutlinedIcon />} />
 
             <Typography
               variant="h6"
@@ -140,11 +167,7 @@ const Sidebar = () => {
             >
               Data
             </Typography>
-            <Item
-              title="Manage Team"
-              to="team"
-              icon={<PeopleOutlinedIcon />}
-            />
+            <Item title="Manage Team" to="team" icon={<PeopleOutlinedIcon />} />
             <Item
               title="Contacts Information"
               to="contacts"
@@ -186,11 +209,7 @@ const Sidebar = () => {
             >
               Charts
             </Typography>
-            <Item
-              title="Bar Chart"
-              to="bar"
-              icon={<BarChartOutlinedIcon />}
-            />
+            <Item title="Bar Chart" to="bar" icon={<BarChartOutlinedIcon />} />
             <Item
               title="Pie Chart"
               to="pie"
