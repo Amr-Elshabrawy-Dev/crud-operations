@@ -1,5 +1,6 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 import TextErrorHandler from "./TextErrorHandler";
 
 const FormTextField = ({
@@ -12,6 +13,8 @@ const FormTextField = ({
   handleChange,
   gridColumn,
   type = "text",
+  select = false,
+  options = [],
 }) => {
   return (
     <TextField
@@ -30,7 +33,15 @@ const FormTextField = ({
         errors[name] && <TextErrorHandler title={errors[name]} />
       }
       sx={{ gridColumn }}
-    />
+      select={select}
+    >
+      {select &&
+        options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+    </TextField>
   );
 };
 
