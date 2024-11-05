@@ -7,6 +7,7 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import RenderIconButton from "../helpers/RenderIconButton";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -15,38 +16,52 @@ const Navbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
-      {/* search bar */}
+      {/* SEARCH BAR */}
       <Box
         display="flex"
-        backgroundColor={colors.primary[400]}
+        alignItems="center"
+        bgcolor={colors.primary[400]}
         borderRadius="3px"
+        px={1}
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
+        <InputBase
+          sx={{ ml: 1, flex: 1, color: colors.grey[100] }}
+          placeholder="Search"
+          inputProps={{ "aria-label": "search" }}
+        />
+        <IconButton
+          type="button"
+          aria-label="search"
+          sx={{ p: 1, color: colors.grey[100] }}
+        >
           <SearchIcon />
         </IconButton>
       </Box>
 
-      {/* icons */}
-      <Box display="flex">
-        <IconButton onClick={colorMode.toggleColorMode}>
+      {/* ICONS */}
+      <Box display="flex" alignItems="center" gap={1}>
+        <RenderIconButton
+          label={theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"}
+          onClick={colorMode.toggleColorMode}
+        >
           {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
             <LightModeOutlinedIcon />
+          ) : (
+            <DarkModeOutlinedIcon />
           )}
-        </IconButton>
-        <IconButton>
+        </RenderIconButton>
+        <RenderIconButton label={"Notifications"}>
           <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
+        </RenderIconButton>
+        <RenderIconButton label={"Settings"}>
           <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
+        </RenderIconButton>
+        <RenderIconButton label={"Profile"}>
           <PersonOutlineIcon />
-        </IconButton>
+        </RenderIconButton>
       </Box>
     </Box>
   );
 };
+
 export default Navbar;
