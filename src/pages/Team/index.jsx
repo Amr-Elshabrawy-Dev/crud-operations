@@ -63,7 +63,6 @@ const Team = () => {
           >
             <Box
               width="80%"
-              m="0 auto"
               p="5px"
               display="flex"
               justifyContent="center"
@@ -71,8 +70,10 @@ const Team = () => {
               textAlign="center"
               backgroundColor={
                 access === "admin"
-                  ? colors.greenAccent[600]
-                  : colors.greenAccent[700]
+                  ? colors.greenAccent[700]
+                  : access === "manager"
+                  ? colors.redAccent[700]
+                  : colors.blueAccent[700]
               }
               borderRadius="4px"
             >
