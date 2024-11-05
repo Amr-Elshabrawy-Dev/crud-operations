@@ -1,51 +1,67 @@
 import { useState } from "react";
 import { Sidebar as ProSidebar } from "react-pro-sidebar";
-import { Menu, MenuItem } from "react-pro-sidebar";
-import {
-  Avatar,
-  Box,
-  Collapse,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { NavLink } from "react-router-dom";
-// import "react-pro-sidebar/dist/css/styles.css";
+import { Menu } from "react-pro-sidebar";
+import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
-
-const Item = ({ title, to, icon }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  return (
-    <MenuItem
-      component={<NavLink to={to} />}
-      icon={icon}
-      title={title}
-      style={{
-        color: colors.grey[100],
-      }}
-    >
-      <Typography>{title}</Typography>
-    </MenuItem>
-  );
-};
+import {
+  BarChartOutlined as BarChartIcon,
+  CalendarTodayOutlined as CalendarIcon,
+  ContactsOutlined as ContactsIcon,
+  HelpOutlineOutlined as HelpIcon,
+  HomeOutlined as HomeIcon,
+  MapOutlined as MapIcon,
+  PeopleOutlined as PeopleIcon,
+  PersonOutlined as PersonIcon,
+  PieChartOutlineOutlined as PieChartIcon,
+  ReceiptOutlined as ReceiptIcon,
+  TimelineOutlined as TimelineIcon,
+} from "@mui/icons-material";
+import SidebarHeader from "../helpers/SidebarHeader";
+import SidebarProfile from "../helpers/SidebarProfile";
+import SidebarItem from "../helpers/SidebarItem";
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  // Define handleToggle Collapsed function
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  // Define sections and items as data objects
+  const sections = [
+    {
+      title: "Data",
+      items: [
+        { title: "Manage Team", to: "team", icon: <PeopleIcon /> },
+        {
+          title: "Contacts Information",
+          to: "contacts",
+          icon: <ContactsIcon />,
+        },
+        { title: "Invoices Balances", to: "invoices", icon: <ReceiptIcon /> },
+      ],
+    },
+    {
+      title: "Pages",
+      items: [
+        { title: "Profile Form", to: "form", icon: <PersonIcon /> },
+        { title: "Calendar", to: "calendar", icon: <CalendarIcon /> },
+        { title: "FAQ Page", to: "faq", icon: <HelpIcon /> },
+      ],
+    },
+    {
+      title: "Charts",
+      items: [
+        { title: "Bar Chart", to: "bar", icon: <BarChartIcon /> },
+        { title: "Pie Chart", to: "pie", icon: <PieChartIcon /> },
+        { title: "Line Chart", to: "line", icon: <TimelineIcon /> },
+        { title: "Geography Chart", to: "geography", icon: <MapIcon /> },
+      ],
+    },
+  ];
+
   return (
     <Box
       sx={{
@@ -73,158 +89,38 @@ const Sidebar = () => {
       >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            title="Menu"
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
-            }}
-          >
-            <Box
-              display="inline-flex"
-              alignItems="center"
-              gap={isCollapsed ? 0 : 8}
-              ml={isCollapsed ? "0" : "15px"}
-              sx={{ transition: "all 0.5s ease-in-out" }}
-            >
-              <Box>
-                <Collapse
-                  in={!isCollapsed}
-                  orientation="horizontal"
-                  timeout={500}
-                >
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      color: colors.grey[100],
-                    }}
-                  >
-                    ADMINS
-                  </Typography>
-                </Collapse>
-              </Box>
-              <IconButton
-                onClick={() => setIsCollapsed(!isCollapsed)}
-                my="10px"
-                width="50%"
-                sx={{
-                  "&.MuiIconButton-root:hover,&.MuiIconButton-root:active": {
-                    backgroundColor: "transparent !important",
-                    color: `${colors.blueAccent[500]} !important`,
-                    transition: "all 0.2s ease-in-out",
-                  },
-                }}
-              >
-                <MenuOutlinedIcon />
-              </IconButton>
-            </Box>
-          </MenuItem>
-
+          <SidebarHeader
+            isCollapsed={isCollapsed}
+            handleToggle={handleToggle}
+          />
+          {/* USER PROFILE */}
           <Box>
-            <Collapse
-              orientation="vertical"
-              in={!isCollapsed}
-              timeout={500}
-            >
-              <Box
-                mb={2}
-                sx={{
-                  color: colors.grey[100],
-                }}
-              >
-                <Box display="flex" justifyContent="center" alignItems="center">
-                  <Avatar
-                    alt="profile-user"
-                    src={`../../assets/user.png`}
-                    sx={{ cursor: "pointer", height: "80px", width: "80px" }}
-                  />
-                </Box>
-                <Box textAlign="center">
-                  <Typography
-                    variant="h2"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
-                    sx={{ m: "10px 0 0 0" }}
-                  >
-                    Amr
-                  </Typography>
-                  <Typography variant="h5" color={colors.greenAccent[500]}>
-                    VP Fancy Admin
-                  </Typography>
-                </Box>
-              </Box>
-            </Collapse>
+            <SidebarProfile isCollapsed={isCollapsed} colors={colors} />
           </Box>
-
+          {/* SIDEBAR ITEM */}
           <Box pl={isCollapsed ? undefined : "10%"}>
-            <Item title="Dashboard" to="/" icon={<HomeOutlinedIcon />} />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item title="Manage Team" to="team" icon={<PeopleOutlinedIcon />} />
-            <Item
-              title="Contacts Information"
-              to="contacts"
-              icon={<ContactsOutlinedIcon />}
-            />
-            <Item
-              title="Invoices Balances"
-              to="invoices"
-              icon={<ReceiptOutlinedIcon />}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pages
-            </Typography>
-            <Item
-              title="Profile Form"
-              to="form"
-              icon={<PersonOutlinedIcon />}
-            />
-            <Item
-              title="Calendar"
-              to="calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-            />
-            <Item
-              title="FAQ Page"
-              to="faq"
-              icon={<HelpOutlineOutlinedIcon />}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item title="Bar Chart" to="bar" icon={<BarChartOutlinedIcon />} />
-            <Item
-              title="Pie Chart"
-              to="pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-            />
-            <Item
-              title="Line Chart"
-              to="line"
-              icon={<TimelineOutlinedIcon />}
-            />
-            <Item
-              title="Geography Chart"
-              to="geography"
-              icon={<MapOutlinedIcon />}
-            />
+            <SidebarItem title="Dashboard" to="/" icon={<HomeIcon />} />
+            {/* SIDEBAR SECTIONS */}
+            {sections.map((section, index) => (
+              <Box key={index} mt={2}>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  {section.title}
+                </Typography>
+                {section.items.map((item, idx) => (
+                  <SidebarItem
+                    key={idx}
+                    title={item.title}
+                    to={item.to}
+                    icon={item.icon}
+                  />
+                ))}
+              </Box>
+            ))}
+            {/* SIDEBAR SECTIONS */}
           </Box>
         </Menu>
       </ProSidebar>
