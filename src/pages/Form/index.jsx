@@ -1,6 +1,6 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Heading from "../../components/common/Heading";
-import FormTextField from "../../components/helpers/FormTextField";
+import FormTextField from "../../components/ui/FormTextField";
 import * as yup from "yup";
 import { useState } from "react";
 import { Formik } from "formik";

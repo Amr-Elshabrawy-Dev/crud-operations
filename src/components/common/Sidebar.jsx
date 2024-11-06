@@ -16,9 +16,9 @@ import {
   ReceiptOutlined as ReceiptIcon,
   TimelineOutlined as TimelineIcon,
 } from "@mui/icons-material";
-import SidebarHeader from "../helpers/SidebarHeader";
-import SidebarProfile from "../helpers/SidebarProfile";
-import SidebarItem from "../helpers/SidebarItem";
+import SidebarHeader from "../ui/SidebarHeader";
+import SidebarProfile from "../ui/SidebarProfile";
+import SidebarItem from "../ui/SidebarItem";
 
 const Sidebar = () => {
   const theme = useTheme();

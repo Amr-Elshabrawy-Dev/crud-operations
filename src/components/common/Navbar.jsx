@@ -7,7 +7,7 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import RenderIconButton from "../helpers/RenderIconButton";
+import RenderIconButton from "../ui/RenderIconButton";
 
 const Navbar = () => {
   const theme = useTheme();
