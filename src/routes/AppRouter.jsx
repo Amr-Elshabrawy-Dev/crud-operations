@@ -18,7 +18,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Admin />,
-    errorElement: <Error />,
     children: [
       {
         index: true,
@@ -63,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "calendar",
         element: <Calendar />,
+      },
+      {
+        path: "*",
+        element: <Error />,
       },
     ],
   },
