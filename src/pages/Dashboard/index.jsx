@@ -40,14 +40,19 @@ const Dashboard = () => {
       </Box>
       {/* Grid & Charts */}
       <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="130px"
-        gap="20px"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(12, 1fr)",
+          gridAutoRows: "130px",
+          justifyContent: "center",
+          gap: "20px",
+        }}
       >
         {/* Row 1 */}
         <Box
-          gridColumn="span 3"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 3" },
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -66,7 +71,9 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 3" },
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -85,7 +92,9 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 3" },
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -104,7 +113,9 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 3" },
+          }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -124,12 +135,14 @@ const Dashboard = () => {
         </Box>
         {/* Row 2 */}
         <Box
-          gridColumn="span 8"
-          gridRow="span 2"
+          sx={{
+            gridColumn: { xs: "span 12", xl: "span 8" },
+            gridRow: "span 2",
+          }}
           backgroundColor={colors.primary[400]}
         >
           <Box
-            mt="25px"
+            mt={1}
             p="0 30px"
             display="flex"
             justifyContent="space-between"
@@ -165,8 +178,10 @@ const Dashboard = () => {
         </Box>
         {/* Transactions */}
         <Box
-          gridColumn="span 4"
-          gridRow="span 2"
+          sx={{
+            gridColumn: { xs: "span 12", xl: "span 4" },
+            gridRow: "span 2",
+          }}
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
@@ -216,8 +231,10 @@ const Dashboard = () => {
         </Box>
         {/* Row 3 */}
         <Box
-          gridColumn="span 4"
-          gridRow="span 2"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 4" },
+            gridRow: "span 2",
+          }}
           backgroundColor={colors.primary[400]}
           p={3.75}
         >
@@ -238,26 +255,14 @@ const Dashboard = () => {
             >
               $48,352 revenue generated
             </Typography>
-            <Typography>
-              Includes extra misc expenditures & costs
-            </Typography>
+            <Typography>Includes extra misc expenditures & costs</Typography>
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Typography variant="h5" fontWeight="600" px={3.75} pt={3.75}>
-            Sales Quantity
-          </Typography>
-          <Box height="250px" mt="-20px">
-            <ChartBarCompo isDashboard={true} />
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
+          sx={{
+            gridColumn: { xs: "span 12", md: "span 6", xl: "span 4" },
+            gridRow: "span 2",
+          }}
           backgroundColor={colors.primary[400]}
           p={3.75}
         >
@@ -266,6 +271,20 @@ const Dashboard = () => {
           </Typography>
           <Box height="200px">
             <ChartGeographyCompo isDashboard={true} />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            gridColumn: { xs: "span 12",md:"span 12", xl: "span 4" },
+            gridRow: "span 2",
+          }}
+          backgroundColor={colors.primary[400]}
+        >
+          <Typography variant="h5" fontWeight="600" px={3.75} pt={3.75}>
+            Sales Quantity
+          </Typography>
+          <Box height="250px" mt="-20px">
+            <ChartBarCompo isDashboard={true} />
           </Box>
         </Box>
       </Box>
