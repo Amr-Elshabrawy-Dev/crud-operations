@@ -1,12 +1,32 @@
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, styled, useTheme } from "@mui/material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { tokens } from "../../theme";
 
 const RenderIconButton = ({ children, label, onClick }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
+  const CustomTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: colors.blueAccent[600],
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: colors.blueAccent[600],
+    },
+  }));
+
   return (
-    <Tooltip title={label}>
-      <IconButton onClick={onClick} aria-label={label}>
+    <CustomTooltip title={label}>
+      <IconButton
+        sx={{ "&:hover": { backgroundColor: colors.blueAccent[600] } }}
+        onClick={onClick}
+        aria-label={label}
+      >
         {children}
       </IconButton>
-    </Tooltip>
+    </CustomTooltip>
   );
 };
-export default RenderIconButton
+export default RenderIconButton;

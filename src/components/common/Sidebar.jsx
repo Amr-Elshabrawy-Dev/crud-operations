@@ -23,7 +23,7 @@ import SidebarItem from "../ui/SidebarItem";
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   // Define handleToggle Collapsed function
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -99,7 +99,12 @@ const Sidebar = () => {
           </Box>
           {/* SIDEBAR ITEM */}
           <Box pl={isCollapsed ? undefined : "10%"}>
-            <SidebarItem title="Dashboard" to="/" icon={<HomeIcon />} />
+            <SidebarItem
+              title="Dashboard"
+              to="/"
+              icon={<HomeIcon />}
+              isCollapsed={isCollapsed}
+            />
             {/* SIDEBAR SECTIONS */}
             {sections.map((section, index) => (
               <Box key={index} mt={2}>
@@ -116,6 +121,7 @@ const Sidebar = () => {
                     title={item.title}
                     to={item.to}
                     icon={item.icon}
+                    isCollapsed={isCollapsed}
                   />
                 ))}
               </Box>

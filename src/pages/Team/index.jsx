@@ -1,34 +1,53 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
-import Heading from "../../components/common/Heading";
-import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import { Box, Typography, useTheme } from "@mui/material";
+import DataTable from "../../components/ui/DataTable";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import { tokens } from "../../theme";
+import { mockDataTeam } from "../../data/mockData";
+import { useState } from "react";
+import CustomToolbar from "../../components/ui/CustomToolbar";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [teamData, setTeamData] = useState(mockDataTeam);
+
+  // Update selected users on row selection
+  const handleSelectionChange = (selectionModel) => {
+    setSelectedUsers(selectionModel);
+  };
+
+  // Delete selected users
+  const handleDeleteUsers = () => {
+    setTeamData((prevData) =>
+      prevData.filter((user) => !selectedUsers.includes(user.id))
+    );
+    setSelectedUsers([]); // Clear selection after deletion
+  };
+
   const columns = [
     {
       field: "id",
       headerName: "ID",
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
+      width: 200,
       align: "center",
       headerAlign: "center",
+      cellClassName: "name-column--cell",
     },
     {
       field: "age",
       headerName: "Age",
+      width: 100,
       type: "number",
       align: "center",
       headerAlign: "center",
@@ -36,119 +55,94 @@ const Team = () => {
     {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "access",
       headerName: "Access Level",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Box
-              width="80%"
-              p="5px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              textAlign="center"
-              backgroundColor={
-                access === "admin"
-                  ? colors.greenAccent[700]
-                  : access === "manager"
-                  ? colors.redAccent[700]
-                  : colors.blueAccent[700]
-              }
-              borderRadius="4px"
-            >
-              {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-              {access === "manager" && <SecurityOutlinedIcon />}
-              {access === "user" && <LockOpenOutlinedIcon />}
-              <Typography color={colors.grey[100]} ml={0.5}>
-                {access}
-              </Typography>
-            </Box>
-          </Box>
-        );
-      },
+      type: "singleSelect",
+      valueOptions: ["admin", "manager", "user"],
+      editable: true,
     },
   ];
-  return (
-    <Stack m={2}>
-      <Heading title="Team" subtitle="Managing The Team Members" />
+
+  // Custom cell rendering function
+  const renderAccessCell = ({ row: { access } }) => {
+    const accessColor =
+      access === "admin"
+        ? colors.greenAccent[700]
+        : access === "manager"
+        ? colors.redAccent[700]
+        : colors.blueAccent[700];
+
+    const accessIcon =
+      access === "admin" ? (
+        <AdminPanelSettingsOutlinedIcon fontSize="inherit" />
+      ) : access === "manager" ? (
+        <SecurityOutlinedIcon fontSize="inherit" />
+      ) : (
+        <LockOpenOutlinedIcon fontSize="inherit" />
+      );
+
+    return (
       <Box
-        mt={5}
-        display="grid"
-        gridTemplateColumns="1fr"
-        sx={{
-          height: "75vh",
-          width: "100%",
-          mx: "auto",
-          "& > div": {
-            gridColumn: "span 1",
-          },
-          "& .MuiDataGrid-root": { border: "0" },
-          "& .MuiDataGrid-cell": { border: "0" },
+        display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        p="5px"
+        m="0.65rem auto 0"
+        bgcolor={accessColor}
+        borderRadius="4px"
+        fontSize={"clamp(10px, calc(1.367vw), 12px)"}
+        overflow="hidden !important"
+      >
+        {accessIcon}
+        <Typography fontSize={"inherit"} color={colors.grey[100]} ml={0.5} textTransform="capitalize" fontWeight="500">
+          {access}
+        </Typography>
+      </Box>
+    );
+  };
+
+  return (
+    <>
+      <DataTable
+        rows={teamData}
+        columns={columns}
+        title="Team"
+        subtitle="Managing The Team Members"
+        checkboxSelection={true}
+        renderCellContent={renderAccessCell}
+        onSelectionChange={handleSelectionChange}
+        customStyles={{
           "& .name-column--cell": { color: colors.greenAccent[300] },
-          "& .MuiDataGrid-row--borderBottom": {
-            backgroundColor: `${colors.blueAccent[700]} !important`,
-          },
-          "& .MuiDataGrid-columnHeader": {
-            borderBottom: "0 !important",
-          },
-          "& .MuiDataGrid-iconSeparator": {
-            color: colors.primary[400],
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "0 !important",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
+        }}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onDelete: handleDeleteUsers,
+            isDeleteDisabled: selectedUsers.length === 0,
           },
         }}
-      >
-        <DataGrid
-          rows={mockDataTeam}
-          columns={columns}
-          checkboxSelection
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
-          sx={{
-            backgroundColor: colors.primary[400],
-            "& .MuiDataGrid-toolbarContainer": {
-              "& .MuiButtonBase-root": {
-                color: `${colors.grey[100]} !important`,
-              },
-            },
-          }}
-        />
-      </Box>
-    </Stack>
+      />
+    </>
   );
 };
+
 export default Team;

@@ -69,9 +69,17 @@ export const mockDataTeam = [
     id: 9,
     name: "Harvey Roxie",
     email: "harveyroxie@gmail.com",
-    age: 65,
+    age: 35,
     phone: "(444)555-6239",
     access: "admin",
+  },
+  {
+    id: 10,
+    name: "Frances Roxie",
+    email: "Francesroxie@gmail.com",
+    age: 65,
+    phone: "(425)365-6738",
+    access: "manager",
   },
 ];
 
