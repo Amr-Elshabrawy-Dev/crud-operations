@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Heading from "../../components/common/Heading";
 // icons
@@ -19,21 +19,36 @@ import StatBox from "../../components/dashboardCompo/StatBox";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Heading title="Dashboard" subtitle="Welcome to your dashboard" />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          justifyContent: { xs: "center", sm: "space-between" },
+          alignItems: "center",
+          mb:1
+        }}
+      >
+        <Heading
+          title="Dashboard"
+          subtitle="Welcome to your dashboard"
+          textAlign={isNonMobile ? "left" : "center"}
+        />
         <Box>
           <Button
+            variant="contained"
+            startIcon={<DownloadOutlinedIcon />}
             sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
+              textWrap: "nowrap",
+              color: theme.palette.getContrastText(colors.blueAccent[600]),
+              backgroundColor: colors.blueAccent[600],
+              "&:hover": {
+                backgroundColor: colors.blueAccent[700],
+              },
             }}
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
         </Box>
@@ -275,7 +290,7 @@ const Dashboard = () => {
         </Box>
         <Box
           sx={{
-            gridColumn: { xs: "span 12",md:"span 12", xl: "span 4" },
+            gridColumn: { xs: "span 12", md: "span 12", xl: "span 4" },
             gridRow: "span 2",
           }}
           backgroundColor={colors.primary[400]}

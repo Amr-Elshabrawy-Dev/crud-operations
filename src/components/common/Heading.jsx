@@ -1,20 +1,29 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
-const Heading = ({ title, subtitle }) => {
+const Heading = ({ title, subtitle, textAlign="left" }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box mb={2}>
+    <Box
+      sx={{
+        mb: 2,
+        textAlign,
+      }}
+    >
       <Typography
-        variant="h2"
         color={colors.grey[100]}
         fontWeight="bold"
-        sx={{ mb: "5px" }}
+        sx={{ mb: "5px", fontSize: { xs: 20, sm: 32 } }}
       >
         {title}
       </Typography>
-      <Typography variant="h5" color={colors.greenAccent[400]}>
+      <Typography
+        sx={{
+          fontSize: { xs: 12, sm: 16 },
+          color: colors.greenAccent[400],
+        }}
+      >
         {subtitle}
       </Typography>
     </Box>
