@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { Sidebar as ProSidebar } from "react-pro-sidebar";
-import { Menu } from "react-pro-sidebar";
-import { Box, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useTheme,
+  Drawer,
+  List,
+  Divider,
+} from "@mui/material";
 import { tokens } from "../../theme";
 import {
   BarChartOutlined as BarChartIcon,
@@ -19,6 +24,8 @@ import {
 import SidebarHeader from "../ui/SidebarHeader";
 import SidebarProfile from "../ui/SidebarProfile";
 import SidebarItem from "../ui/SidebarItem";
+
+const drawerWidth = 250;
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -63,42 +70,44 @@ const Sidebar = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        "& .ps-sidebar-root": {
-          border: "none !important",
+    <Box>
+      <Drawer
+        variant="permanent"
+        open={isCollapsed}
+        sx={{
           height: "100%",
-        },
-        "& .ps-menu-button": {
-          backgroundColor: "transparent !important",
-          transition: "all 0.2s ease-in-out",
-          height: "45px !important",
-        },
-        "& .ps-menu-button:hover": {
-          color: `${colors.blueAccent[400]} !important`,
-        },
-        "& .ps-menu-button.active": {
-          color: `${colors.blueAccent[500]} !important`,
-        },
-      }}
-    >
-      <ProSidebar
-        collapsed={isCollapsed}
-        transitionDuration={500}
-        backgroundColor={colors.primary[400]}
+          width: `calc(${theme.spacing(7)} + 1px)`,
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: !isCollapsed
+              ? theme.transitions.duration.leavingScreen
+              : theme.transitions.duration.enteringScreen,
+          }),
+          [`& .MuiDrawer-paper`]: {
+            overflowX: "hidden",
+            backgroundColor: colors.primary[400],
+            width: isCollapsed
+              ? `calc(${theme.spacing(7)} + 1px)`
+              : drawerWidth,
+            boxSizing: "border-box",
+            transition: "all 0.3s ease-in-out",
+          },
+        }}
       >
-        <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          <SidebarHeader
-            isCollapsed={isCollapsed}
-            handleToggle={handleToggle}
-          />
-          {/* USER PROFILE */}
-          <Box>
-            <SidebarProfile isCollapsed={isCollapsed} colors={colors} />
-          </Box>
+        {/* MENU ICON */}
+        <SidebarHeader isCollapsed={isCollapsed} handleToggle={handleToggle} />
+        <Divider />
+        {/* USER PROFILE */}
+        <Box>
+          <SidebarProfile isCollapsed={isCollapsed} colors={colors} />
+        </Box>
+        <Divider />
+        <List sx={{ py: "0px" }}>
           {/* SIDEBAR ITEM */}
-          <Box pl={isCollapsed ? undefined : "10%"}>
+          <Box sx={{
+            pl: isCollapsed ? undefined : "10px",
+            transition: "0.3s",
+          }}>
             <SidebarItem
               title="Dashboard"
               to="/"
@@ -107,14 +116,18 @@ const Sidebar = () => {
             />
             {/* SIDEBAR SECTIONS */}
             {sections.map((section, index) => (
-              <Box key={index} mt={2}>
+              <Box key={index}>
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
-                  sx={{ m: "15px 0 5px 20px" }}
+                  sx={{
+                    m: isCollapsed ? "0" : "5px 20px 0",
+                    textAlign: isCollapsed ? "center" : "left",
+                  }}
                 >
                   {section.title}
                 </Typography>
+
                 {section.items.map((item, idx) => (
                   <SidebarItem
                     key={idx}
@@ -128,8 +141,8 @@ const Sidebar = () => {
             ))}
             {/* SIDEBAR SECTIONS */}
           </Box>
-        </Menu>
-      </ProSidebar>
+        </List>
+      </Drawer>
     </Box>
   );
 };

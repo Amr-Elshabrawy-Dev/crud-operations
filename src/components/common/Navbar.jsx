@@ -1,4 +1,4 @@
-import { Box, IconButton, InputBase, useTheme } from "@mui/material";
+import { Box, Divider, IconButton, InputBase, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
 import { useContext } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,52 +15,67 @@ const Navbar = () => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
-      {/* SEARCH BAR */}
+    <>
       <Box
-        display="flex"
-        alignItems="center"
-        bgcolor={colors.primary[400]}
-        borderRadius="3px"
-        px={1}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: colors.primary[400],
+          px: 2,
+          ...theme.mixins.toolbar,
+        }}
       >
-        <InputBase
-          sx={{ ml: 1, flex: 1, color: colors.grey[100] }}
-          placeholder="Search"
-          inputProps={{ "aria-label": "search" }}
-        />
-        <IconButton
-          type="button"
-          aria-label="search"
-          sx={{ p: 1, color: colors.grey[100] }}
+        {/* SEARCH BAR */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colors.primary[500],
+            borderRadius: "5px",
+            px: 1,
+          }}
         >
-          <SearchIcon />
-        </IconButton>
+          <InputBase
+            sx={{ ml: 1, flex: 1, color: colors.grey[100] }}
+            placeholder="Search"
+            inputProps={{ "aria-label": "search" }}
+          />
+          <IconButton
+            type="button"
+            aria-label="search"
+            sx={{ p: 1, color: colors.grey[100] }}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Box>
+      
+        {/* ICONS */}
+        <Box display="flex" alignItems="center" gap={1}>
+          <RenderIconButton
+            label={theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"}
+            onClick={colorMode.toggleColorMode}
+          >
+            {theme.palette.mode === "dark" ? (
+              <LightModeOutlinedIcon />
+            ) : (
+              <DarkModeOutlinedIcon />
+            )}
+          </RenderIconButton>
+          <RenderIconButton label={"Notifications"}>
+            <NotificationsOutlinedIcon />
+          </RenderIconButton>
+          <RenderIconButton label={"Settings"}>
+            <SettingsOutlinedIcon />
+          </RenderIconButton>
+          <RenderIconButton label={"Profile"}>
+            <PersonOutlineIcon />
+          </RenderIconButton>
+        </Box>
       </Box>
-
-      {/* ICONS */}
-      <Box display="flex" alignItems="center" gap={1}>
-        <RenderIconButton
-          label={theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"}
-          onClick={colorMode.toggleColorMode}
-        >
-          {theme.palette.mode === "dark" ? (
-            <LightModeOutlinedIcon />
-          ) : (
-            <DarkModeOutlinedIcon />
-          )}
-        </RenderIconButton>
-        <RenderIconButton label={"Notifications"}>
-          <NotificationsOutlinedIcon />
-        </RenderIconButton>
-        <RenderIconButton label={"Settings"}>
-          <SettingsOutlinedIcon />
-        </RenderIconButton>
-        <RenderIconButton label={"Profile"}>
-          <PersonOutlineIcon />
-        </RenderIconButton>
-      </Box>
-    </Box>
+      <Divider />
+    </>
   );
 };
 

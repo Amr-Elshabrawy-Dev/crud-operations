@@ -1,36 +1,50 @@
-import { Avatar, Box, Collapse, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 
 const SidebarProfile = ({ isCollapsed, colors }) => {
   return (
-    <Collapse orientation="vertical" in={!isCollapsed} timeout={500}>
+    <Box
+      sx={{
+        my: 1.5,
+        color: colors.grey[100],
+      }}
+    >
       <Box
-        mb={2}
         sx={{
-          color: colors.grey[100],
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Avatar
-            alt="profile-user"
-            src={`../../assets/user.png`}
-            sx={{ cursor: "pointer", height: "80px", width: "80px" }}
-          />
-        </Box>
-        <Box textAlign="center">
-          <Typography
-            variant="h2"
-            color={colors.grey[100]}
-            fontWeight="bold"
-            sx={{ m: "10px 0 0 0" }}
-          >
-            Amr
-          </Typography>
-          <Typography variant="h5" color={colors.greenAccent[500]}>
-            VP Fancy Admin
-          </Typography>
-        </Box>
+        <Avatar
+          alt="profile-user"
+          src={`../../assets/user.png`}
+          sx={{ cursor: "pointer", height: "60px", width: "60px" }}
+        />
       </Box>
-    </Collapse>
+      <Box textAlign="center">
+        <Typography
+          variant="h3"
+          sx={{
+            color: colors.grey[100],
+            fontWeight: "bold",
+            fontSize: isCollapsed ? "0px" : undefined,
+            transition: "0.3s",
+          }}
+        >
+          Amr
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            color: colors.greenAccent[500],
+            fontSize: isCollapsed ? "0px" : undefined,
+            transition: "0.3s",
+          }}
+        >
+          VP Fancy Admin
+        </Typography>
+      </Box>
+    </Box>
   );
-}
-export default SidebarProfile
+};
+export default SidebarProfile;
