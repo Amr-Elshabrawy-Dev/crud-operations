@@ -98,20 +98,30 @@ const Team = () => {
 
     return (
       <Box
-        display="flex"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-        width="100%"
-        p="5px"
-        m="0.65rem auto 0"
-        bgcolor={accessColor}
-        borderRadius="4px"
-        fontSize={"clamp(10px, calc(1.367vw), 12px)"}
-        overflow="hidden !important"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          p: "5px",
+          m: "0.65rem auto 0",
+          bgcolor: accessColor,
+          borderRadius: "4px",
+          fontSize: "clamp(10px, calc(1.367vw), 12px)",
+          overflow: "hidden !important",
+        }}
       >
         {accessIcon}
-        <Typography fontSize={"inherit"} color={colors.grey[100]} ml={0.5} textTransform="capitalize" fontWeight="500">
+        <Typography
+          sx={{
+            fontSize: "inherit",
+            color: colors.grey[100],
+            ml: 0.5,
+            textTransform: "capitalize",
+            fontWeight: "500",
+          }}
+        >
           {access}
         </Typography>
       </Box>
@@ -126,6 +136,7 @@ const Team = () => {
         title="Team"
         subtitle="Managing The Team Members"
         checkboxSelection={true}
+        field="access"
         renderCellContent={renderAccessCell}
         onSelectionChange={handleSelectionChange}
         customStyles={{

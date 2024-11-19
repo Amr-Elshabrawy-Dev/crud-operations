@@ -15,6 +15,7 @@ const DataTable = ({
   onSelectionChange,
   customStyles = {},
   renderCellContent,
+  field,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -24,24 +25,27 @@ const DataTable = ({
     height: "75dvh",
     width: "100%",
     mx: "auto",
-    mt: 5,
+    mt: 3,
     "& .MuiDataGrid-columnHeaderTitle": { fontWeight: "bold" },
     "& .MuiDataGrid-cell": { border: 0 },
-    "& .MuiDataGrid-columnHeader": {
-      borderBottom: `3px solid ${colors.redAccent[600]}`,
+    "& .MuiDataGrid-columnHeaders": {
+      color: `${colors.greenAccent[600]} !important`,
     },
     "& .MuiDataGrid-iconSeparator": { color: colors.primary[400] },
-    "& .MuiDataGrid-virtualScroller": { backgroundColor: colors.primary[400] },
+    "& .MuiDataGrid-virtualScroller": {
+      backgroundColor: colors.primary[400],
+    },
     "& .MuiDataGrid-footerContainer": {
       borderTop: 0,
-      backgroundColor: colors.blueAccent[700],
+      backgroundColor: colors.primary[400],
       "& .MuiTablePagination-root": {
         overflowY: "hidden !important",
       },
     },
     "& .MuiCheckbox-root": { color: `${colors.greenAccent[200]} !important` },
     "& .MuiDataGrid-row--borderBottom": {
-      backgroundColor: `${colors.blueAccent[700]} !important`,
+      backgroundColor: `${colors.primary[500]} !important`,
+      borderTop: `1px solid ${colors.grey[600]}`,
     },
     ...customStyles, // apply custom styles here
   };
@@ -53,7 +57,7 @@ const DataTable = ({
         <DataGrid
           rows={rows}
           columns={columns.map((col) =>
-            col.field === "access" && renderCellContent
+            col.field === field && renderCellContent
               ? { ...col, renderCell: renderCellContent }
               : col
           )}
@@ -77,16 +81,5 @@ const DataTable = ({
     </Stack>
   );
 };
-
-// DataGrid.propTypes = {
-//   rows: PropTypes.array.isRequired,
-//   columns: PropTypes.array.isRequired,
-//   title: PropTypes.string,
-//   subtitle: PropTypes.string,
-//   toolbarOptions: PropTypes.object,
-//   checkboxSelection: PropTypes.bool,
-//   customStyles: PropTypes.object,
-//   renderCellContent: PropTypes.func, // for custom cell rendering
-// };
 
 export default DataTable;

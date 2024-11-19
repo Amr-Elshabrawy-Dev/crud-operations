@@ -32,7 +32,7 @@ const Navbar = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: colors.primary[500],
+            backgroundColor: colors.grey[900],
             borderRadius: "5px",
             px: 1,
           }}

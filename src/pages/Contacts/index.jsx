@@ -1,31 +1,49 @@
-import { Box, Stack, useTheme } from "@mui/material";
-import Heading from "../../components/common/Heading";
+import { useState } from "react";
+import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import DataTable from "../../components/ui/DataTable";
+import CustomToolbar from "../../components/ui/CustomToolbar";
 
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [contactsData, setContactsData] = useState(mockDataContacts);
+
+  // Update selected users on row selection
+  const handleSelectionChange = (selectionModel) => {
+    setSelectedUsers(selectionModel);
+  };
+
+  // Delete selected users
+  const handleDeleteUsers = () => {
+    setContactsData((prevData) =>
+      prevData.filter((user) => !selectedUsers.includes(user.id))
+    );
+    setSelectedUsers([]); // Clear selection after deletion
+  };
+
   const columns = [
     {
       field: "id",
       headerName: "ID",
-      flex: 0.5,
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "registrarId",
       headerName: "Registrar ID",
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      width: 200,
       cellClassName: "name-column--cell",
       align: "center",
       headerAlign: "center",
@@ -34,109 +52,70 @@ const Contacts = () => {
       field: "age",
       headerName: "Age",
       type: "number",
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "address",
       headerName: "Address",
-      flex: 1,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "city",
       headerName: "City",
-      flex: 1,
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "zipCode",
       headerName: "ZipCode",
-      flex: 1,
+      width: 100,
       align: "center",
       headerAlign: "center",
     },
   ];
   return (
-    <Stack m={2}>
-      <Heading
+    <>
+      <DataTable
+        rows={contactsData}
+        columns={columns}
         title="Contacts"
         subtitle="List of Contacts for Future Reference"
-      />
-      <Box
-        mt={5}
-        display="grid"
-        gridTemplateColumns="1fr"
-        sx={{
-          height: "75vh",
-          width: "100%",
-          mx: "auto",
-          "& > div": {
-            gridColumn: "span 1",
-          },
-          "& .MuiDataGrid-root": { border: "0" },
-          "& .MuiDataGrid-cell": { border: "0" },
+        checkboxSelection={true}
+        renderCellContent
+        onSelectionChange={handleSelectionChange}
+        customStyles={{
           "& .name-column--cell": { color: colors.greenAccent[300] },
-          "& .MuiDataGrid-row--borderBottom": {
-            backgroundColor: `${colors.blueAccent[700]} !important`,
-          },
-          "& .MuiDataGrid-columnHeader": {
-            borderBottom: "0 !important",
-          },
-          "& .MuiDataGrid-iconSeparator": {
-            color: colors.primary[400],
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "0 !important",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
+        }}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onDelete: handleDeleteUsers,
+            isDeleteDisabled: selectedUsers.length === 0,
           },
         }}
-      >
-        <DataGrid
-          rows={mockDataContacts}
-          columns={columns}
-          checkboxSelection
-          components={{ toolbar: GridToolbar }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
-          sx={{
-            backgroundColor: colors.primary[400],
-            "& .MuiDataGrid-toolbarContainer": {
-              "& .MuiButtonBase-root": {
-                color: `${colors.grey[100]} !important`,
-              },
-            },
-          }}
-        />
-      </Box>
-    </Stack>
+      />
+    </>
   );
 };
 export default Contacts;

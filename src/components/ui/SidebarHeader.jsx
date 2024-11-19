@@ -19,20 +19,25 @@ const SidebarHeader = ({ isCollapsed, handleToggle }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    cursor: "pointer",
     padding: theme.spacing(0, 1),
+    transition: "all 0.3s ease-in-out",
+    "&:hover, &:active": {
+      color: `${colors.blueAccent[500]} !important`,
+    },
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
 
   return (
-    <DrawerHeader>
+    <DrawerHeader onClick={handleToggle}>
       <Box>
         <Collapse in={!isCollapsed} orientation="horizontal">
           <Typography
             variant="h4"
             sx={{
               p: 1,
-              color: colors.grey[100],
+              color: "inherit",
             }}
           >
             MENU
@@ -40,12 +45,11 @@ const SidebarHeader = ({ isCollapsed, handleToggle }) => {
         </Collapse>
       </Box>
       <IconButton
-        onClick={handleToggle}
         sx={{
+          color: "inherit",
           "&.MuiIconButton-root:hover,&.MuiIconButton-root:active": {
             backgroundColor: "transparent !important",
-            color: `${colors.blueAccent[500]} !important`,
-            transition: "all 0.5s ease-in-out",
+            transition: "all 0.3s ease-in-out",
           },
         }}
       >

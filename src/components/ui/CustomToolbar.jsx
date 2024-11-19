@@ -33,9 +33,6 @@ const CustomToolbar = ({ onDelete, isDeleteDisabled }) => {
             display: "inline-flex",
             alignItems: "center",
             columnGap: "5px",
-            color: isDeleteDisabled
-              ? `${colors.redAccent[300]} !important`
-              : `${colors.redAccent[500]} !important`,
             transition: "color 0.5s ease-in-out",
           }}
         >
