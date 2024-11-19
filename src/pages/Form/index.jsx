@@ -4,7 +4,8 @@ import FormTextField from "../../components/ui/FormTextField";
 import * as yup from "yup";
 import { useState } from "react";
 import { Formik } from "formik";
-import { Alert, Box, Button, Snackbar } from "@mui/material";
+import { Alert, Box, Button, Slide, Snackbar } from "@mui/material";
+import { CheckCircle } from "@mui/icons-material";
 
 const initialValues = {
   firstName: "",
@@ -79,6 +80,10 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:768px)");
   const [openAlert, setOpenAlert] = useState(false);
 
+  function SlideTransition(props) {
+    return <Slide {...props} direction="down" />;
+  }
+
   const handleAlertClose = () => setOpenAlert(false);
   const handleFormSubmit = (values, actions) => {
     console.log("🚀 ~FormSubmit~:", values, actions);
@@ -104,14 +109,19 @@ const Form = () => {
           handleBlur,
           handleChange,
           handleSubmit,
+          isValid,
+          dirty,
         }) => (
           <Box
             component={"form"}
             onSubmit={handleSubmit}
-            display="grid"
-            gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
+              display: "grid",
+              gap: "30px",
+              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+              p: "20px",
+              borderRadius: "10px",
+              boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.2)",
               "& > div": {
                 gridColumn: isNonMobile ? undefined : "span 4",
               },
@@ -128,13 +138,20 @@ const Form = () => {
                 handleBlur={handleBlur}
                 handleChange={handleChange}
                 gridColumn={field.gridColumn}
-                type={field.type}
+                type={field.type || "text"}
                 select={field.select || false}
                 options={field.options || []}
               />
             ))}
             <Box textAlign="center" gridColumn="span 4">
-              <Button type="submit" color="secondary" variant="contained">
+              <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                size="large"
+                disabled={!isValid || !dirty}
+                sx={{ fontWeight: "700", fontSize: "16px" }}
+              >
                 Create New User
               </Button>
             </Box>
@@ -142,14 +159,26 @@ const Form = () => {
               anchorOrigin={{ vertical: "top", horizontal: "right" }}
               open={openAlert}
               onClose={handleAlertClose}
+              TransitionComponent={SlideTransition}
+              autoHideDuration={10_000}
+              sx={{
+                mt: 6,
+              }}
             >
               <Alert
                 onClose={handleAlertClose}
                 severity="success"
-                variant="outlined"
-                sx={{ backgroundColor: "#141B2D" }}
+                variant="filled"
+                sx={{
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                iconMapping={{
+                  success: <CheckCircle fontSize="inherit" />,
+                }}
               >
-                User Created Successfully
+                🎉 User Created Successfully!
               </Alert>
             </Snackbar>
           </Box>
