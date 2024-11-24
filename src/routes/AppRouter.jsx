@@ -12,6 +12,8 @@ import PieChart from "../pages/PieChart";
 import FAQ from "../pages/FAQ";
 import GeographyChart from "../pages/GeographyChart";
 import Calendar from "../pages/Calendar";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
 // import Home from "../pages/Home";
 
 const router = createBrowserRouter([
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+      },
+      {
+        path: "signIn",
+        element: <SignIn />,
+      },
+      {
+        path: "signUp",
+        element: <SignUp />,
       },
       {
         path: "team",

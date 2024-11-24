@@ -3,30 +3,14 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  styled,
   useTheme,
 } from "@mui/material";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import CustomTooltip from "./CustomTooltip";
 import { tokens } from "../../theme";
 import { NavLink } from "react-router-dom";
 const SidebarItem = ({ title, to, icon, isCollapsed }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const CustomTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(() => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: colors.blueAccent[500],
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: colors.blueAccent[500],
-    },
-    [`&.${tooltipClasses.popper}[data-popper-placement*="right"] .${tooltipClasses.tooltip}`]:
-      {
-        marginLeft: "0px",
-      },
-  }));
 
   return (
     <CustomTooltip
@@ -40,7 +24,11 @@ const SidebarItem = ({ title, to, icon, isCollapsed }) => {
         sx={{
           "&:hover .MuiListItemIcon-root , &:hover .MuiListItemText-root": {
             backgroundColor: "transparent !important",
-            color: `${colors.blueAccent[500]}`,
+            color: `${colors.blueAccent[400]} !important`,
+          },
+          "& .active .MuiListItemIcon-root, & .active .MuiListItemText-root": {
+            backgroundColor: "transparent !important",
+            color: `${colors.blueAccent[500]} !important`,
           },
         }}
       >

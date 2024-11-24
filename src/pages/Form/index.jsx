@@ -85,14 +85,22 @@ const Form = () => {
   }
 
   const handleAlertClose = () => setOpenAlert(false);
-  const handleFormSubmit = (values, actions) => {
-    console.log("🚀 ~FormSubmit~:", values, actions);
-    setTimeout(() => {
+  const handleFormSubmit = async (values, actions) => {
+    try {
+      if (!values || Object.keys(values).length === 0) {
+        throw new Error("No values provided");
+      }
+      console.log("Form submitted:", values);
+      // Simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       alert(JSON.stringify(values, null, 2));
       setOpenAlert(true);
+    } catch (error) {
+      console.error("Error during form submission:", error);
+    } finally {
       actions.resetForm();
       actions.setSubmitting(false);
-    }, 1000);
+    }
   };
   return (
     <Box m={2}>
@@ -116,6 +124,7 @@ const Form = () => {
             component={"form"}
             onSubmit={handleSubmit}
             sx={{
+              mt: 3,
               display: "grid",
               gap: "30px",
               gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
@@ -143,8 +152,16 @@ const Form = () => {
                 options={field.options || []}
               />
             ))}
-            <Box textAlign="center" gridColumn="span 4">
+            <Box
+              sx={{
+                textAlign: "center",
+                gridColumn: "span 4",
+                width: "300px",
+                mx: "auto",
+              }}
+            >
               <Button
+                fullWidth
                 type="submit"
                 color="secondary"
                 variant="contained"

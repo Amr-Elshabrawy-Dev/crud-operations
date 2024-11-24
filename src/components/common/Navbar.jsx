@@ -7,12 +7,32 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import RenderIconButton from "../ui/RenderIconButton";
+import NavbarActions from "../ui/NavbarActions";
 
 const Navbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  const actionButtons = [
+    {
+      title: theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode",
+      icon:
+        theme.palette.mode === "dark" ? (
+          <LightModeOutlinedIcon />
+        ) : (
+          <DarkModeOutlinedIcon />
+        ),
+      handleClick: colorMode.toggleColorMode,
+    },
+    { title: "Notifications", icon: <NotificationsOutlinedIcon /> },
+    { title: "Settings", icon: <SettingsOutlinedIcon /> },
+    {
+      title: "Profile",
+      icon: <PersonOutlineIcon />,
+      options: ["signIn", "signUp"],
+    },
+  ];
 
   return (
     <>
@@ -32,7 +52,7 @@ const Navbar = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: colors.grey[900],
+            backgroundColor: colors.primary[900],
             borderRadius: "5px",
             px: 1,
           }}
@@ -50,28 +70,18 @@ const Navbar = () => {
             <SearchIcon />
           </IconButton>
         </Box>
-      
-        {/* ICONS */}
+
+        {/* Action Buttons */}
         <Box display="flex" alignItems="center" gap={1}>
-          <RenderIconButton
-            label={theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"}
-            onClick={colorMode.toggleColorMode}
-          >
-            {theme.palette.mode === "dark" ? (
-              <LightModeOutlinedIcon />
-            ) : (
-              <DarkModeOutlinedIcon />
-            )}
-          </RenderIconButton>
-          <RenderIconButton label={"Notifications"}>
-            <NotificationsOutlinedIcon />
-          </RenderIconButton>
-          <RenderIconButton label={"Settings"}>
-            <SettingsOutlinedIcon />
-          </RenderIconButton>
-          <RenderIconButton label={"Profile"}>
-            <PersonOutlineIcon />
-          </RenderIconButton>
+          {actionButtons.map((button, idx) => (
+            <NavbarActions
+              key={idx}
+              title={button.title}
+              icon={button.icon}
+              options={button.options}
+              handleClick={button.handleClick}
+            />
+          ))}
         </Box>
       </Box>
       <Divider />
