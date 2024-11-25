@@ -7,6 +7,7 @@ import { tokens } from "../../theme";
 import {
   Email,
   Flag,
+  Key,
   LocationCity,
   Person,
   Phone,
@@ -36,19 +37,21 @@ const FormTextField = ({
       type={type}
       label={label}
       name={name}
-      value={value[name]}
+      placeholder={label}
+      value={value}
       onBlur={handleBlur}
       onChange={handleChange}
-      error={!!touched[name] && !!errors[name]}
-      helperText={
-        touched[name] &&
-        errors[name] && <TextErrorHandler title={errors[name]} />
-      }
+      error={!!touched && !!errors}
+      helperText={touched && errors && <TextErrorHandler title={errors} />}
       slotProps={{
         input: {
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment
+              position="start"
+              sx={{ color: colors.greenAccent[400] }}
+            >
               {name === "email" && <Email />}
+              {name === "password" && <Key />}
               {name === "contact" && <Phone />}
               {name === "country" && <Flag />}
               {name === "city" && <LocationCity />}

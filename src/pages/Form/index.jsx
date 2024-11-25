@@ -1,11 +1,10 @@
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Heading from "../../components/common/Heading";
-import FormTextField from "../../components/ui/FormTextField";
 import * as yup from "yup";
+import { alpha, Box, Card, useTheme } from "@mui/material";
+import Heading from "../../components/common/Heading";
+import ReusableForm from "../../components/ui/ReusableForm";
+import { tokens } from "../../theme";
 import { useState } from "react";
-import { Formik } from "formik";
-import { Alert, Box, Button, Slide, Snackbar } from "@mui/material";
-import { CheckCircle } from "@mui/icons-material";
+import CustomAlert from "../../components/ui/CustomAlert";
 
 const initialValues = {
   firstName: "",
@@ -77,14 +76,13 @@ const fields = [
 ];
 
 const Form = () => {
-  const isNonMobile = useMediaQuery("(min-width:768px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [openAlert, setOpenAlert] = useState(false);
 
-  function SlideTransition(props) {
-    return <Slide {...props} direction="down" />;
-  }
-
-  const handleAlertClose = () => setOpenAlert(false);
+  const handleAlertClose = () => {
+    setOpenAlert(false);
+  };
   const handleFormSubmit = async (values, actions) => {
     try {
       if (!values || Object.keys(values).length === 0) {
@@ -105,102 +103,35 @@ const Form = () => {
   return (
     <Box m={2}>
       <Heading title="CREATE USER" subtitle="Create a New User Profile" />
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={userSchema}
+      <Card
+        sx={{
+          background: colors.primary[500],
+          color: colors.grey[100],
+          width: "100%",
+          padding: theme.spacing(4),
+          margin: "auto",
+          borderRadius: "15px",
+          boxShadow: `inset -3px 3px 10px ${alpha(
+            colors.primary[700],
+            0.4
+          )}, inset 3px -3px 10px ${alpha(colors.primary[400], 0.4)}`,
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isValid,
-          dirty,
-        }) => (
-          <Box
-            component={"form"}
-            onSubmit={handleSubmit}
-            sx={{
-              mt: 3,
-              display: "grid",
-              gap: "30px",
-              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-              p: "20px",
-              borderRadius: "10px",
-              boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.2)",
-              "& > div": {
-                gridColumn: isNonMobile ? undefined : "span 4",
-              },
-            }}
-          >
-            {fields.map((field) => (
-              <FormTextField
-                key={field.name}
-                label={field.label}
-                name={field.name}
-                value={values}
-                touched={touched}
-                errors={errors}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                gridColumn={field.gridColumn}
-                type={field.type || "text"}
-                select={field.select || false}
-                options={field.options || []}
-              />
-            ))}
-            <Box
-              sx={{
-                textAlign: "center",
-                gridColumn: "span 4",
-                width: "300px",
-                mx: "auto",
-              }}
-            >
-              <Button
-                fullWidth
-                type="submit"
-                color="secondary"
-                variant="contained"
-                size="large"
-                disabled={!isValid || !dirty}
-                sx={{ fontWeight: "700", fontSize: "16px" }}
-              >
-                Create New User
-              </Button>
-            </Box>
-            <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              open={openAlert}
-              onClose={handleAlertClose}
-              TransitionComponent={SlideTransition}
-              autoHideDuration={10_000}
-              sx={{
-                mt: 6,
-              }}
-            >
-              <Alert
-                onClose={handleAlertClose}
-                severity="success"
-                variant="filled"
-                sx={{
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                iconMapping={{
-                  success: <CheckCircle fontSize="inherit" />,
-                }}
-              >
-                🎉 User Created Successfully!
-              </Alert>
-            </Snackbar>
-          </Box>
-        )}
-      </Formik>
+        <ReusableForm
+          fields={fields}
+          initialValues={initialValues}
+          validationSchema={userSchema}
+          handleOnSubmit={handleFormSubmit}
+          buttonText="Create User"
+          buttonWidth="250px"
+        />
+      </Card>
+      <CustomAlert
+        open={openAlert}
+        handleClose={handleAlertClose}
+        message={"User created successfully"}
+        severity="success"
+      />
     </Box>
   );
 };

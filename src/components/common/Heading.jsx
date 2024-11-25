@@ -1,26 +1,36 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
-const Heading = ({ title, subtitle, textAlign="left" }) => {
+const Heading = ({
+  title,
+  subtitle,
+  textAlign = "left",
+  direction = "column",
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <Box
       sx={{
         mb: 2,
-        textAlign,
+        display: "flex",
+        flexDirection: direction,
+        alignItems: direction === "column" ? "flex-start" : "center",
+        justifyContent: "space-between",
       }}
     >
       <Typography
-        color={colors.grey[100]}
-        fontWeight="bold"
-        sx={{ mb: "5px", fontSize: { xs: 20, sm: 32 } }}
+        sx={{
+          fontSize: { xs: 18, sm: 25 },
+          color: colors.grey[100],
+          fontWeight: "bold",
+        }}
       >
         {title}
       </Typography>
       <Typography
         sx={{
-          fontSize: { xs: 12, sm: 16 },
+          fontSize: { xs: 12, sm: 18 },
           color: colors.greenAccent[400],
         }}
       >
