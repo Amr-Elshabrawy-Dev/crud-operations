@@ -32,6 +32,7 @@ const NavbarActions = memo(({ title, icon, options = null, handleClick }) => {
     <>
       <div>
         <Button
+          component={"div"}
           variant="text"
           sx={{
             minWidth: "auto",
@@ -71,7 +72,12 @@ const NavbarActions = memo(({ title, icon, options = null, handleClick }) => {
           >
             {Array.isArray(options) ? (
               options.map((option, idx) => (
-                <MenuItem key={idx} component={Link} to={option} onClick={handleMenuClose}>
+                <MenuItem
+                  key={idx}
+                  component={Link}
+                  to={option}
+                  onClick={handleMenuClose}
+                >
                   {option}
                 </MenuItem>
               ))
