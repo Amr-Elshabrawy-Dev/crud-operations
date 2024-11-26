@@ -20,10 +20,19 @@ const DataTable = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const tableWidth = columns
+    .map((col) => {
+      return col.width;
+    })
+    .reduce((acc, col) => {
+      return acc + Number(col);
+    }, 60);
+    
   // Merge custom styles with default styles
   const dataGridStyles = {
     height: "75dvh",
     width: "100%",
+    maxWidth: tableWidth,
     mx: "auto",
     mt: 3,
     "& .MuiDataGrid-columnHeaderTitle": { fontWeight: "bold" },
